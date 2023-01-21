@@ -30,9 +30,9 @@ class TelegramBot:
 
         if os.environ.get(username):
             self.authToken[userId] = os.environ.get(username)
-
+            
         await update.message.reply_text('Hi there!')
-        await help(update, context)
+        await self.help(update, context)
 
 
     async def help(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
