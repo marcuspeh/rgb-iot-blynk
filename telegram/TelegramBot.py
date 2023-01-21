@@ -1,5 +1,6 @@
 import logging
 import BlynkInteractions
+import os
 
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
@@ -24,7 +25,11 @@ class TelegramBot:
     async def start(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Send a message when the command /start is issued."""
         userId = update.message.from_user.id
+        username = update.message.from_user.username
         self.command[userId] = ""
+
+        if os.environ.get(username):
+            self.authToken[userId] = os.environ.get(username)
 
         await update.message.reply_text('Hi there!')
         await help(update, context)
@@ -261,7 +266,7 @@ class TelegramBot:
         try:
             auth = self.getAuthToken(userId)
             status = BlynkInteractions.getPowerStatus(auth)
-            
+
             if (status == POWER_OFF):
                 await update.message.reply_text("Device need to be set to on first")
                 return False
