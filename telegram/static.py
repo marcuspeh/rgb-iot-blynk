@@ -151,7 +151,7 @@ webColors = {
     'white': (255, 255, 255)
 }
 
-TOKEN = "telegram token"
+TOKEN = os.environ.get('TELE_TOKEN', "Telegram token goes here")
 PORT = int(os.environ.get('PORT', 5000))
 
 POWER_PIN = "v0"
